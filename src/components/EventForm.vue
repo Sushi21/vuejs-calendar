@@ -1,6 +1,7 @@
 <template>
     <div id="event-form" :class="{active: active}" :style="{top: top, left: left}">
         <h4>Add an event</h4>
+        <p>{{ date.format('dddd, MMM do') }}</p>
         <div class="text">
             <input v-focus type="text" v-model="description" placeholder="Dinner at Cafe cest la vie" @keyup.enter="create">
         </div>
@@ -18,6 +19,9 @@ export default {
     };
   },
   computed: {
+    date() {
+        return this.$store.state.eventFormDate;
+    },
     top() {
       return `${this.$store.state.eventFormPosY}px`;
     },
@@ -34,18 +38,18 @@ export default {
     },
     create() {
       if (this.description.length > 0) {
-        this.$store.commit("addEvent", this.description);
+        this.$store.dispatch("addEvent", this.description);
         this.close();
         this.description = "";
       }
     }
   },
-      directives: {
-        focus: {
-            update(el) {
-                el.focus();
-            }
-        }
+  directives: {
+    focus: {
+      update(el) {
+        el.focus();
+      }
     }
+  }
 };
 </script>
