@@ -20,7 +20,7 @@ export default {
   },
   computed: {
     date() {
-        return this.$store.state.eventFormDate;
+      return this.$store.state.eventFormDate;
     },
     top() {
       return `${this.$store.state.eventFormPosY}px`;
@@ -38,9 +38,10 @@ export default {
     },
     create() {
       if (this.description.length > 0) {
-        this.$store.dispatch("addEvent", this.description);
-        this.close();
-        this.description = "";
+        this.$store.dispatch("addEvent", this.description).then(_ => {
+          this.close();
+          this.description = "";
+        });
       }
     }
   },
